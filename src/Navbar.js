@@ -17,9 +17,9 @@ function Navbar() {
             </Link>
           </li>
           <li style={styles.navItem}>
-            <a href="#" style={styles.navLink}>
+            <Link to="/blog" style={styles.navLink}>
               Blog
-            </a>
+            </Link>
           </li>
           <li style={styles.navLinkWrapper}>
             <Link to="/signup" style={styles.navLink}>

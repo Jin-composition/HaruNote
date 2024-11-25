@@ -5,6 +5,7 @@ import Signup from "./Signup";
 import Signin from "./Signin";
 import Calendar from "./Calendar";
 import Diary from "./Diary";
+import Blog from "./Blog";
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
           <Route path="/signin" element={<Signin />} />
           <Route path="/calendar" element={<Calendar />} />
           <Route path="/diary/:date" element={<Diary />} />
+          <Route path="/blog" element={<Blog />} />
         </Routes>
       </BrowserRouter>
     </>

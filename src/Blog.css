@@ -1,0 +1,63 @@
+.tab-h {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+  margin-bottom: 0; /* 기존의 margin 제거 */
+  padding: 0; /* 추가된 padding 제거 */
+  margin-left: 150px;
+  border: none;
+}
+
+.tab {
+  padding: 10px 20px;
+  cursor: pointer;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  transition: background-color 0.3s;
+}
+a .tab-button.active {
+  background-color: #ccc;
+}
+
+.blog-container {
+  width: 1200px;
+  height: 450px;
+  margin-top: 0px;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #fafafa;
+}
+
+.search-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.search-input {
+  width: 90%; /* 적절한 너비 설정 */
+  font-size: 15px;
+  margin-left: 10px;
+  padding: 8px 20px; /* 좌우 패딩을 좀 더 넓게 설정 */
+  border: none;
+  border-radius: 25px; /* 타원형으로 만들기 위한 border-radius 설정 */
+  outline: none;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 살짝 그림자 추가 */
+}
+
+.blog-entry {
+  border: 1px solid #ccc;
+  padding: 20px; /* 안쪽 여백 */
+  margin-top: 20px;
+  margin-bottom: 20px; /* 항목 사이에 여백 */
+  border-radius: 20px;
+  background-color: #fff; /* 배경색 */
+  font-size: 13px;
+}

@@ -42,10 +42,50 @@
   transition: all 0.3s ease;
 }
 
-.toggle-button.active {
-  background-color: #4caf50; /* Green for active */
-  color: white;
-  border-color: #4caf50;
+.toggle-wrap {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.toggle {
+  transition: all 0.3s;
+  position: relative;
+  width: 82px;
+  height: 25px;
+  border-radius: 16px;
+  background-color: #cecece;
+  padding: 0 0px;
+}
+
+.toggle.on {
+  background-color: #888;
+}
+
+.toggle-button {
+  transition: all 0.3s;
+  display: block;
+  width: 5px;
+  height: 6px;
+  border-radius: 45%;
+  background-color: white;
+  position: absolute;
+  top: -3%;
+  left: -1px;
+  transform: translate(0%, 0%);
+}
+
+.toggle.on .toggle-button {
+  transform: translateX(40px);
+}
+
+.toggle-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 12px;
+  color: #333;
 }
 
 .content-section {
@@ -117,51 +157,4 @@
 .submit-button:hover {
   background-color: black;
   color: white;
-}
-
-/* Diary.css */
-.toggle-wrap {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-.toggle {
-  transition: all 0.3s;
-  position: relative;
-  width: 82px;
-  height: 25px;
-  border-radius: 16px;
-  background-color: #cecece;
-  padding: 0 0px;
-}
-
-.toggle.on {
-  background-color: #888;
-}
-
-.toggle-button {
-  transition: all 0.3s;
-  display: block;
-  width: 5px;
-  height: 6px;
-  border-radius: 45%;
-  background-color: white;
-  position: absolute;
-  top: -3%;
-  left: -1px;
-  transform: translate(0%, 0%);
-}
-
-.toggle.on .toggle-button {
-  transform: translateX(40px);
-}
-
-.toggle-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 12px;
-  color: #333;
 }
