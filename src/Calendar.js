@@ -7,6 +7,13 @@ const Calendar = () => {
   const [activeTab, setActiveTab] = useState("calendar"); // 탭 상태 추가
   const navigate = useNavigate();
 
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = (today.getMonth() + 1).toString().padStart(2, "0"); // getMonth는 0부터 시작하므로 +1을 해줘야 올바른 월을 구할 수 있음
+  const day = today.getDate().toString().padStart(2, "0"); // padStart를 사용해 두 자릿수로 맞추기
+
+  const formattedDate = `${year}-${month}-${day}`;
+
   const handlePrevMonth = () => {
     setCurrentDate((prevDate) => {
       const newDate = new Date(
@@ -58,7 +65,7 @@ const Calendar = () => {
   const totalCells = Math.ceil((firstDayOfMonth + daysInMonth.length) / 7) * 7;
 
   return (
-    <div className="notion-table-calendar">
+    <div className="table-calendar">
       {/* 탭 영역 */}
       <div className="tab-header">
         <button
@@ -68,10 +75,10 @@ const Calendar = () => {
           Calendar
         </button>
         <button
-          className={`tab-button ${activeTab === "analytics" ? "active" : ""}`}
-          onClick={() => setActiveTab("analytics")}
+          className={`tab-button ${activeTab === "list" ? "active" : ""}`}
+          onClick={() => setActiveTab("list")}
         >
-          Analytics
+          List
         </button>
       </div>
 
@@ -145,7 +152,7 @@ const Calendar = () => {
                             <button
                               className="cell-button"
                               onClick={() => {
-                                navigate(`/new-page/${date}`); // 이동할 경로
+                                navigate(`/diary/${formattedDate}`); // 이동할 경로
                               }}
                             >
                               +
@@ -160,7 +167,7 @@ const Calendar = () => {
         </>
       )}
 
-      {activeTab === "analytics" && (
+      {activeTab === "list" && (
         <div class="list-container">
           <h2>나의 일기장 목록</h2>
           <table class="list-table">
