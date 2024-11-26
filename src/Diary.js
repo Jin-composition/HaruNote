@@ -6,6 +6,7 @@ const Diary = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [image, setImage] = useState(null);
+  const [imageFile, setImageFile] = useState(null);
 
   const toggleVisibility = () => {
     setIsPublic(!isPublic);
@@ -15,12 +16,60 @@ const Diary = () => {
     const file = event.target.files[0];
     if (file) {
       setImage(URL.createObjectURL(file));
+      setImageFile(file); // 실제 파일 객체 저장
     }
   };
 
-  const handleSubmit = () => {
-    // Add submit logic here
-    console.log({ title, content, isPublic, image });
+  const handleSubmit = async () => {
+    if (!title) {
+      alert("제목을 입력해주세요.");
+      return;
+    }
+
+    if (!content) {
+      alert("내용을 입력해주세요.");
+      return;
+    }
+
+    const payload = {
+      title,
+      content,
+      isPublic,
+    };
+
+    const headers = new Headers();
+    headers.append("Content-Type", "application/json");
+
+    // try {
+    //   const jsonResponse = await fetch("http://harunote.com/diary", {
+    //     method: "POST",
+    //     headers,
+    //     body: JSON.stringify(payload),
+    //   });
+
+    //   const jsonResult = await jsonResponse.json();
+    //   console.log("Text Data Upload Success:", jsonResult);
+
+    //   if (imageFile) {
+    //     const formData = new FormData();
+    //     formData.append("image", imageFile);
+
+    //     const imageResponse = await fetch("http://harunote.com/diary/image", {
+    //       method: "POST",
+    //       body: formData,
+    //     });
+
+    //     const imageResult = await imageResponse.json();
+    //     console.log("Image Upload Success:", imageResult);
+    //   }
+
+    //   alert("일기가 저장되었습니다.");
+    // } catch (error) {
+    //   console.error("Upload Failed:", error);
+    //   alert("일기가 저장되지 않았습니다.");
+    // }
+
+    console.log(payload, imageFile);
   };
 
   return (
