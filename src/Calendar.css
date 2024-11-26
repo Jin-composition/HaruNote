@@ -10,6 +10,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: 25px;
+  margin-top: 8px;
 }
 
 .calendar-header h2 {
@@ -48,7 +50,7 @@
 }
 
 .calendar-table td {
-  height: 93px; /* 셀 높이 */
+  height: 97px; /* 셀 높이 */
   border: 1px solid #e0e0e0;
   position: relative;
   text-align: left;
@@ -96,8 +98,13 @@
   transition: opacity 0.2s ease-in-out; /* 부드러운 전환 */
 }
 
-td {
-  position: relative; /* 버튼을 위치시키기 위한 기준점 */
+.calendar-table .td {
+  position: relative;
+  width: 100px; /* 캘린더 셀 너비 */
+  height: 80px; /* 캘린더 셀 높이 */
+  text-align: center;
+  vertical-align: top; /* 텍스트 상단 정렬 */
+  overflow: hidden; /* 넘치는 콘텐츠 숨김 */
 }
 
 td:hover .cell-button {
@@ -140,7 +147,7 @@ td:hover .cell-button {
 
 .tab-button {
   position: relative;
-  padding: 7px 17px;
+  padding: 5px 17px;
   border: 1px solid #ccc;
   border-bottom: none;
   background-color: #f9f9f9;
@@ -194,6 +201,10 @@ td:hover .cell-button {
   vertical-align: middle;
 }
 
+.list-item {
+  height: 10px;
+}
+
 .icon-column {
   width: 5%;
   text-align: center;
@@ -218,4 +229,21 @@ td:hover .cell-button {
   height: 16px;
   background-color: #ccc;
   border-radius: 3px;
+}
+
+.entry-title {
+  font-size: 12px;
+  color: #333;
+  margin-top: 27px;
+  margin-left: 8px;
+  padding: 3px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: block;
+  max-width: 90%;
+  box-sizing: border-box;
 }

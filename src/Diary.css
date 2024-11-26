@@ -150,11 +150,27 @@
   color: black;
   border-radius: 4px;
   cursor: pointer;
-
   align-items: center;
 }
 
 .submit-button:hover {
+  background-color: black;
+  color: white;
+}
+
+.cancel-button {
+  margin-top: 15px;
+  margin-left: -20px;
+  padding: 7px 20px;
+  background-color: #cccf;
+  border: none;
+  color: black;
+  border-radius: 4px;
+  cursor: pointer;
+  align-items: center;
+}
+
+.cancel-button:hover {
   background-color: black;
   color: white;
 }

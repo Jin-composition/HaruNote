@@ -3,16 +3,20 @@ import { useNavigate } from "react-router-dom";
 import "./Calendar.css";
 
 const Calendar = () => {
+  const navigate = useNavigate();
   const [currentDate, setCurrentDate] = useState(new Date());
   const [activeTab, setActiveTab] = useState("calendar"); // 탭 상태 추가
-  const navigate = useNavigate();
 
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = (today.getMonth() + 1).toString().padStart(2, "0"); // getMonth는 0부터 시작하므로 +1을 해줘야 올바른 월을 구할 수 있음
-  const day = today.getDate().toString().padStart(2, "0"); // padStart를 사용해 두 자릿수로 맞추기
+  const [diaryEntries /*setDiaryEntries*/] = useState([
+    { id: 1, title: "뚜벅이 경주 여행 기록", date: "2024-11-01" },
+    { id: 2, title: "OO전자 (1차 면접) 취준 일기", date: "2024-11-14" },
+    { id: 3, title: "휴가 계획", date: "2024-11-28" },
+    { id: 4, title: "크리스마스 이브", date: "2024-12-24" },
+    { id: 5, title: "장한평 방문", date: "2024-11-01" },
+  ]);
 
-  const formattedDate = `${year}-${month}-${day}`;
+  const year = currentDate.getFullYear();
+  const month = currentDate.getMonth() + 1;
 
   const handlePrevMonth = () => {
     setCurrentDate((prevDate) => {
@@ -116,7 +120,68 @@ const Calendar = () => {
                         const cellIndex = rowIndex * 7 + colIndex;
 
                         let date = cellIndex - firstDayOfMonth + 1;
+
+                        // =============================================================
+                        const currentMonth = currentDate.getMonth() + 1; // 현재 월
+                        const currentYear = currentDate.getFullYear(); // 현재 연도
+
+                        // 현재 달의 날짜를 계산
+                        const prevMonthDate = new Date(
+                          currentYear,
+                          currentMonth - 1,
+                          1
+                        );
+
+                        // 이전 달 1일
+                        const prevMonth = prevMonthDate.getMonth();
+
+                        const nextMonthDate = new Date(
+                          currentYear,
+                          currentMonth + 1,
+                          1
+                        );
+
+                        // 다음 달 1일
+                        const nextMonth =
+                          nextMonthDate.getMonth() === 0
+                            ? 12
+                            : nextMonthDate.getMonth();
+
+                        console.log("nextMonth ", nextMonth);
+                        const lastDayOfCurrentMonth = new Date(
+                          currentYear,
+                          currentMonth,
+                          0
+                        ).getDate();
+
+                        let isCurrentMonth = true;
+                        let isPrevMonth = true;
+                        let isNextMonth = true;
+
+                        // console.log(
+                        //   "...... ",
+                        //   isNextMonth,
+                        //   date,
+                        //   lastDayOfCurrentMonth
+                        // );
+                        if (date <= 0 && month > prevMonth) {
+                          console.log("이전달");
+                          isCurrentMonth = false;
+                          isNextMonth = false;
+                        } else if (date > lastDayOfCurrentMonth) {
+                          console.log("다음달");
+                          isCurrentMonth = false;
+                          isPrevMonth = false;
+                        } else if (month === currentMonth) {
+                          console.log("현재");
+                          isPrevMonth = false;
+                          isNextMonth = false;
+                        }
+
+                        // =============================================================
+
                         let prevDate = date;
+                        // console.log("prevDate ", prevDate);
 
                         if (date < 0) {
                           date = prevMonthDays + date;
@@ -131,9 +196,21 @@ const Calendar = () => {
                           date = prevMonthDays;
                         }
 
-                        const isCurrentMonth =
-                          date > 0 && date <= lastDayOfMonth;
-                        const isSpecial = date === 31;
+                        const formattedMatchDate = new Date(
+                          currentDate.getFullYear(),
+                          currentDate.getMonth(),
+                          date
+                        );
+
+                        // 하루를 더하기
+                        formattedMatchDate.setDate(
+                          formattedMatchDate.getDate() + 1
+                        );
+
+                        // diaryEntries에서 현재 날짜에 해당하는 항목 찾기
+                        const entry = diaryEntries.find(
+                          (item) => item.date === formattedMatchDate
+                        );
 
                         return (
                           <td
@@ -145,18 +222,55 @@ const Calendar = () => {
                             } ${
                               colIndex === 0 || colIndex === 6 ? "weekend" : ""
                             }`}
-                            data-date={
-                              isCurrentMonth ? date : isSpecial ? date : ""
-                            }
+                            data-date={date}
                           >
                             <button
                               className="cell-button"
                               onClick={() => {
-                                navigate(`/diary/${formattedDate}`); // 이동할 경로
+                                navigate(
+                                  `/diary/${
+                                    isCurrentMonth
+                                      ? `${year}-${
+                                          month < 10 ? `0${month}` : month
+                                        }-${date < 10 ? `0${date}` : date}`
+                                      : isPrevMonth
+                                      ? `${
+                                          month === 1
+                                            ? `${year - 1}-12-${
+                                                date < 10 ? `0${date}` : date
+                                              }`
+                                            : `${year}-${
+                                                month - 1 < 10
+                                                  ? `0${month - 1}`
+                                                  : month - 1
+                                              }-${
+                                                date < 10 ? `0${date}` : date
+                                              }`
+                                        }`
+                                      : isNextMonth
+                                      ? `${
+                                          month === 12
+                                            ? `${year + 1}-01-${
+                                                date < 10 ? `0${date}` : date
+                                              }`
+                                            : `${year}-${
+                                                month + 1 < 10
+                                                  ? `0${month + 1}`
+                                                  : month + 1
+                                              }-${
+                                                date < 10 ? `0${date}` : date
+                                              }`
+                                        }`
+                                      : ""
+                                  }`
+                                ); // 이동할 경로
                               }}
                             >
                               +
                             </button>
+                            {entry && (
+                              <p className="entry-title">{entry.title}</p>
+                            )}
                           </td>
                         );
                       })}
@@ -168,23 +282,23 @@ const Calendar = () => {
       )}
 
       {activeTab === "list" && (
-        <div class="list-container">
+        <div className="list-container">
           <h2>나의 일기장 목록</h2>
-          <table class="list-table">
+          <table className="list-table">
             <tbody>
-              <tr>
-                <td class="icon-column">
-                  <i class="file-icon"></i>
+              <tr className="list-item">
+                <td className="icon-column">
+                  <i className="file-icon"></i>
                 </td>
-                <td class="title-column">뚜벅이 경주 여행 기록</td>
-                <td class="date-column">2024.11.23</td>
+                <td className="title-column">뚜벅이 경주 여행 기록</td>
+                <td className="date-column">2024.11.23</td>
               </tr>
               <tr>
-                <td class="icon-column">
-                  <i class="file-icon"></i>
+                <td className="icon-column">
+                  <i className="file-icon"></i>
                 </td>
-                <td class="title-column">OO전자 (1차 면접) 취준 일기</td>
-                <td class="date-column">2024.09.14</td>
+                <td className="title-column">OO전자 (1차 면접) 취준 일기</td>
+                <td className="date-column">2024.09.14</td>
               </tr>
             </tbody>
           </table>

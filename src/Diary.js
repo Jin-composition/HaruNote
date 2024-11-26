@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Diary.css";
 
 const Diary = () => {
@@ -7,6 +8,7 @@ const Diary = () => {
   const [content, setContent] = useState("");
   const [image, setImage] = useState(null);
   const [imageFile, setImageFile] = useState(null);
+  const navigate = useNavigate();
 
   const toggleVisibility = () => {
     setIsPublic(!isPublic);
@@ -117,6 +119,13 @@ const Diary = () => {
       <div className="button-container">
         <button className="submit-button" onClick={handleSubmit}>
           저장
+        </button>
+        <button
+          style={{ marginLeft: "10px" }}
+          className="cancel-button"
+          onClick={() => navigate(-1)}
+        >
+          취소
         </button>
       </div>
     </div>
