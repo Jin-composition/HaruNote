@@ -4,8 +4,11 @@ import "./Blog.css";
 const Blog = () => {
   const [title, setTitle] = useState("");
 
-  const [diaryEntries, setDiaryEntries] = useState([
+  const [diaryEntries /*setDiaryEntries*/] = useState([
     { id: 1, title: "뚜벅이 경주 여행 기록" },
+    { id: 2, title: "OO전자 (1차 면접) 취준 일기" },
+    { id: 3, title: "휴가 계획" },
+    { id: 4, title: "크리스마스 이브" },
     { id: 2, title: "OO전자 (1차 면접) 취준 일기" },
     { id: 3, title: "휴가 계획" },
     { id: 4, title: "크리스마스 이브" },

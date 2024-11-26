@@ -13,6 +13,7 @@ const Calendar = () => {
     { id: 3, title: "휴가 계획", date: "2024-11-28" },
     { id: 4, title: "크리스마스 이브", date: "2024-12-24" },
     { id: 5, title: "장한평 방문", date: "2024-11-01" },
+    { id: 6, title: "나이키매장", date: "2024-11-01" },
   ]);
 
   const handlePrevMonth = () => {
@@ -161,12 +162,6 @@ const Calendar = () => {
                           date -= lastDayOfCurrentMonth;
                         }
 
-                        // 날짜와 URL 생성
-                        const formattedDate = formatDate(
-                          currentYear,
-                          currentMonth,
-                          date
-                        );
                         const diaryURL = getDiaryURL(
                           isCurrentMonth,
                           isPrevMonth,
@@ -177,8 +172,8 @@ const Calendar = () => {
                         );
 
                         // diaryEntries에서 항목 찾기
-                        const entry = diaryEntries.find(
-                          (item) => item.date === formattedDate
+                        const entries = diaryEntries.filter(
+                          (item) => item.date === diaryURL
                         );
 
                         return (
@@ -198,9 +193,14 @@ const Calendar = () => {
                             >
                               +
                             </button>
-                            {entry && (
-                              <p className="entry-title">{entry.title}</p>
-                            )}
+                            <div className="entry-container">
+                              {entries.length > 0 &&
+                                entries.map((entry) => (
+                                  <p key={entry.id} className="entry-title">
+                                    {entry.title}
+                                  </p>
+                                ))}
+                            </div>
                           </td>
                         );
                       })}

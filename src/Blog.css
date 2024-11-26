@@ -4,33 +4,35 @@
   margin-top: 30px;
   margin-bottom: 0; /* 기존의 margin 제거 */
   padding: 0; /* 추가된 padding 제거 */
-  margin-left: 150px;
+  margin-left: 180px;
   border: none;
 }
 
 .tab {
-  padding: 10px 20px;
+  padding: 6px 20px;
   cursor: pointer;
   background-color: #f0f0f0;
   border: 1px solid #ccc;
-  border-radius: 15px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
   transition: background-color 0.3s;
-}
-a .tab-button.active {
-  background-color: #ccc;
 }
 
 .blog-container {
   width: 1200px;
-  height: 450px;
+  height: 530px;
   margin-top: 0px;
   margin-left: auto;
   margin-right: auto;
   border: 1px solid #ddd;
-  border-radius: 12px;
+  border-radius: 20px;
   padding: 20px;
   font-family: Arial, sans-serif;
   background-color: #fafafa;
+  max-height: 600px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  padding: 10px;
 }
 
 .search-section {
