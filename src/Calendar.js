@@ -5,7 +5,7 @@ import "./Calendar.css";
 const Calendar = () => {
   const navigate = useNavigate();
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [activeTab, setActiveTab] = useState("calendar"); // 탭 상태 추가
+  const [activeTab, setActiveTab] = useState("calendar");
 
   const [diaryEntries /*setDiaryEntries*/] = useState([
     { id: 1, title: "뚜벅이 경주 여행 기록", date: "2024-11-01" },
@@ -14,9 +14,6 @@ const Calendar = () => {
     { id: 4, title: "크리스마스 이브", date: "2024-12-24" },
     { id: 5, title: "장한평 방문", date: "2024-11-01" },
   ]);
-
-  const year = currentDate.getFullYear();
-  const month = currentDate.getMonth() + 1;
 
   const handlePrevMonth = () => {
     setCurrentDate((prevDate) => {
@@ -40,8 +37,37 @@ const Calendar = () => {
     });
   };
 
+  // 날짜 형식화 함수
+  const formatDate = (year, month, day) => {
+    const formattedMonth = month < 10 ? `0${month}` : month;
+    const formattedDay = day < 10 ? `0${day}` : day;
+    return `${year}-${formattedMonth}-${formattedDay}`;
+  };
+
+  // URL 생성 함수
+  const getDiaryURL = (isCurrent, isPrev, isNext, year, month, date) => {
+    if (isCurrent) {
+      return formatDate(year, month, date);
+    } else if (isPrev) {
+      const prevMonth = month === 1 ? 12 : month - 1;
+      const prevYear = month === 1 ? year - 1 : year;
+      return formatDate(prevYear, prevMonth, date);
+    } else if (isNext) {
+      const nextMonth = month === 12 ? 1 : month + 1;
+      const nextYear = month === 12 ? year + 1 : year;
+      return formatDate(nextYear, nextMonth, date);
+    }
+    return "";
+  };
+
+  // CSS 클래스 계산 함수
+  const getClassName = (isCurrent, isPrev, isNext, colIndex) => {
+    const baseClass = isCurrent ? "date" : "date faded";
+    const weekendClass = colIndex === 0 || colIndex === 6 ? "weekend" : "";
+    return `${baseClass} ${weekendClass}`;
+  };
+
   const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  let nextDate = "";
 
   const getDaysInMonth = (date) => {
     const year = date.getFullYear();
@@ -54,17 +80,6 @@ const Calendar = () => {
 
   const daysInMonth = getDaysInMonth(currentDate);
   const firstDayOfMonth = daysInMonth[0].getDay();
-  const lastDayOfMonth = new Date(
-    currentDate.getFullYear(),
-    currentDate.getMonth() + 1,
-    0
-  ).getDate();
-
-  const prevMonthDays = new Date(
-    currentDate.getFullYear(),
-    currentDate.getMonth(),
-    0
-  ).getDate();
 
   const totalCells = Math.ceil((firstDayOfMonth + daysInMonth.length) / 7) * 7;
 
@@ -118,153 +133,68 @@ const Calendar = () => {
                       .fill(null)
                       .map((_, colIndex) => {
                         const cellIndex = rowIndex * 7 + colIndex;
-
                         let date = cellIndex - firstDayOfMonth + 1;
 
-                        // =============================================================
-                        const currentMonth = currentDate.getMonth() + 1; // 현재 월
-                        const currentYear = currentDate.getFullYear(); // 현재 연도
-
-                        // 현재 달의 날짜를 계산
-                        const prevMonthDate = new Date(
-                          currentYear,
-                          currentMonth - 1,
-                          1
-                        );
-
-                        // 이전 달 1일
-                        const prevMonth = prevMonthDate.getMonth();
-
-                        const nextMonthDate = new Date(
-                          currentYear,
-                          currentMonth + 1,
-                          1
-                        );
-
-                        // 다음 달 1일
-                        const nextMonth =
-                          nextMonthDate.getMonth() === 0
-                            ? 12
-                            : nextMonthDate.getMonth();
-
-                        console.log("nextMonth ", nextMonth);
+                        // 날짜 정보 계산
+                        const currentMonth = currentDate.getMonth() + 1;
+                        const currentYear = currentDate.getFullYear();
                         const lastDayOfCurrentMonth = new Date(
                           currentYear,
                           currentMonth,
                           0
                         ).getDate();
 
-                        let isCurrentMonth = true;
-                        let isPrevMonth = true;
-                        let isNextMonth = true;
+                        // 달 상태 판별
+                        const isCurrentMonth =
+                          date > 0 && date <= lastDayOfCurrentMonth;
+                        const isPrevMonth = date <= 0;
+                        const isNextMonth = date > lastDayOfCurrentMonth;
 
-                        // console.log(
-                        //   "...... ",
-                        //   isNextMonth,
-                        //   date,
-                        //   lastDayOfCurrentMonth
-                        // );
-                        if (date <= 0 && month > prevMonth) {
-                          console.log("이전달");
-                          isCurrentMonth = false;
-                          isNextMonth = false;
-                        } else if (date > lastDayOfCurrentMonth) {
-                          console.log("다음달");
-                          isCurrentMonth = false;
-                          isPrevMonth = false;
-                        } else if (month === currentMonth) {
-                          console.log("현재");
-                          isPrevMonth = false;
-                          isNextMonth = false;
+                        // 날짜 보정
+                        if (isPrevMonth) {
+                          date += new Date(
+                            currentYear,
+                            currentMonth - 1,
+                            0
+                          ).getDate();
+                        } else if (isNextMonth) {
+                          date -= lastDayOfCurrentMonth;
                         }
 
-                        // =============================================================
-
-                        let prevDate = date;
-                        // console.log("prevDate ", prevDate);
-
-                        if (date < 0) {
-                          date = prevMonthDays + date;
-                        }
-
-                        if (date > lastDayOfMonth) {
-                          nextDate = date;
-                          date = date - lastDayOfMonth;
-                        }
-
-                        if (date === 0) {
-                          date = prevMonthDays;
-                        }
-
-                        const formattedMatchDate = new Date(
-                          currentDate.getFullYear(),
-                          currentDate.getMonth(),
+                        // 날짜와 URL 생성
+                        const formattedDate = formatDate(
+                          currentYear,
+                          currentMonth,
+                          date
+                        );
+                        const diaryURL = getDiaryURL(
+                          isCurrentMonth,
+                          isPrevMonth,
+                          isNextMonth,
+                          currentYear,
+                          currentMonth,
                           date
                         );
 
-                        // 하루를 더하기
-                        formattedMatchDate.setDate(
-                          formattedMatchDate.getDate() + 1
-                        );
-
-                        // diaryEntries에서 현재 날짜에 해당하는 항목 찾기
+                        // diaryEntries에서 항목 찾기
                         const entry = diaryEntries.find(
-                          (item) => item.date === formattedMatchDate
+                          (item) => item.date === formattedDate
                         );
 
                         return (
                           <td
                             key={colIndex}
-                            className={`${
-                              prevDate > 0 && nextDate < lastDayOfMonth
-                                ? "date"
-                                : "date faded"
-                            } ${
-                              colIndex === 0 || colIndex === 6 ? "weekend" : ""
-                            }`}
+                            className={getClassName(
+                              isCurrentMonth,
+                              isPrevMonth,
+                              isNextMonth,
+                              colIndex
+                            )}
                             data-date={date}
                           >
                             <button
                               className="cell-button"
-                              onClick={() => {
-                                navigate(
-                                  `/diary/${
-                                    isCurrentMonth
-                                      ? `${year}-${
-                                          month < 10 ? `0${month}` : month
-                                        }-${date < 10 ? `0${date}` : date}`
-                                      : isPrevMonth
-                                      ? `${
-                                          month === 1
-                                            ? `${year - 1}-12-${
-                                                date < 10 ? `0${date}` : date
-                                              }`
-                                            : `${year}-${
-                                                month - 1 < 10
-                                                  ? `0${month - 1}`
-                                                  : month - 1
-                                              }-${
-                                                date < 10 ? `0${date}` : date
-                                              }`
-                                        }`
-                                      : isNextMonth
-                                      ? `${
-                                          month === 12
-                                            ? `${year + 1}-01-${
-                                                date < 10 ? `0${date}` : date
-                                              }`
-                                            : `${year}-${
-                                                month + 1 < 10
-                                                  ? `0${month + 1}`
-                                                  : month + 1
-                                              }-${
-                                                date < 10 ? `0${date}` : date
-                                              }`
-                                        }`
-                                      : ""
-                                  }`
-                                ); // 이동할 경로
-                              }}
+                              onClick={() => navigate(`/diary/${diaryURL}`)}
                             >
                               +
                             </button>
