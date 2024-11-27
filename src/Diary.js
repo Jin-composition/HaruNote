@@ -13,10 +13,8 @@ const Diary = () => {
   const [diaryData, setDiaryData] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
-  const { entryTitle } = location.state || {};
+  const { entryTitle, id } = location.state || {};
   const token = localStorage.getItem("token");
-
-  console.log("date ", date);
 
   const toggleVisibility = () => {
     setIsPublic(!isPublic);
@@ -48,20 +46,41 @@ const Diary = () => {
       scheduled_at: date,
     };
 
-    console.log("payload ", payload);
     try {
-      // 텍스트 데이터 업로드
-      const textResponse = await axios.post(
-        "http://localhost:8000/user/pages",
-        payload,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
+      if (id) {
+        // 수정: 기존 일기 데이터를 업데이트
+        const updateResponse = await axios.put(
+          `http://localhost:8000/user/pages/${id}`,
+          payload,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (updateResponse.status === 200) {
+          alert("일기가 수정되었습니다.");
+          navigate("/calendar");
         }
-      );
+      } else {
+        // 텍스트 데이터 업로드
+        const textResponse = await axios.post(
+          "http://localhost:8000/user/pages",
+          payload,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
+        if (textResponse.status === 200) {
+          alert("일기가 저장되었습니다.");
+          navigate("/calendar");
+        }
+      }
       // 이미지 파일이 있는 경우 이미지 업로드
       if (imageFile) {
         const formData = new FormData();
@@ -73,13 +92,6 @@ const Diary = () => {
         );
 
         console.log("이미지가 저장되었습니다. ", imageResponse.data);
-      }
-
-      console.log("textResponse ", textResponse);
-
-      if (textResponse.status === 200) {
-        alert("일기가 저장되었습니다.");
-        navigate("/calendar");
       }
     } catch (error) {
       console.error("Upload Failed:", error);
@@ -119,7 +131,6 @@ const Diary = () => {
     fetchData();
   }, []);
 
-  console.log("entryTitle ", entryTitle);
   return (
     <div className="diary-container">
       <div className="title-section">
@@ -164,7 +175,7 @@ const Diary = () => {
       </div>
       <div className="button-container">
         <button className="submit-button" onClick={handleSubmit}>
-          저장
+          {id ? "수정" : "저장"}
         </button>
         <button
           style={{ marginLeft: "10px" }}

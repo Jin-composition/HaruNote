@@ -98,7 +98,6 @@ const Calendar = () => {
           }
         );
 
-        console.log("tq ", response.data);
         const formattedData = response.data.map((item) => ({
           ...item,
           date: formatResponseDate(item.scheduled_at), // scheduled_at 포맷팅
@@ -111,8 +110,6 @@ const Calendar = () => {
 
     fetchData();
   }, []);
-
-  console.log("diaryEntries ", diaryEntries);
 
   return (
     <div className="table-calendar">
@@ -230,7 +227,10 @@ const Calendar = () => {
                                   <Link
                                     key={entry.id}
                                     to={`/diary/${diaryURL}`}
-                                    state={{ entryTitle: entry.title }}
+                                    state={{
+                                      entryTitle: entry.title,
+                                      id: entry.id,
+                                    }}
                                     style={{ textDecoration: "none" }}
                                   >
                                     <p className="entry-title">{entry.title}</p>
