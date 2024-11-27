@@ -1,21 +1,50 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import title from "./assets/title.png";
 import "./Signin.css";
 
 const Signin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-  const handleSignin = () => {
-    console.log("Email:", email);
-    console.log("Password:", password);
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleSignin();
+    }
+  };
+
+  const handleSignin = async () => {
+    if (!email) {
+      alert("이메일을 입력해주세요.");
+      return;
+    } else if (!password) {
+      alert("비밀번호를 입력해주세요.");
+      return;
+    }
+
+    try {
+      const response = await axios.post("http://localhost:8000/user/Signin", {
+        email,
+        password,
+      });
+
+      // 토큰 저장 (예: 로컬 스토리지)
+      localStorage.setItem("token", response.data.token);
+
+      navigate("/calendar");
+    } catch (err) {
+      console.error(err);
+      alert(err.message || "로그인에 실패했습니다. 다시 시도해주세요.");
+    }
   };
 
   return (
     <div>
       <main className="signin-main">
         <img src={title} className="signin-title" alt="description" />
-        <div className="signin-container">
+        <div className="signin-container" onKeyDown={handleKeyDown}>
           <input
             type="email"
             placeholder="name@company.com"
