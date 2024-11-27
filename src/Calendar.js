@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { useTab } from "./TabContext";
 import axios from "axios";
 import "./Calendar.css";
 
 const Calendar = () => {
   const navigate = useNavigate();
+  const { activeTab, setActiveTab } = useTab();
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [activeTab, setActiveTab] = useState("calendar");
   const [diaryEntries, setDiaryEntries] = useState([]);
 
   const handlePrevMonth = () => {
