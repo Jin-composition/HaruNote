@@ -240,10 +240,14 @@ const Calendar = () => {
             <tbody>
               {diaryEntries.map((entry, i) => (
                 <tr className="list-item" key={i}>
-                  <td className="icon-column">
-                    <i className="file-icon"></i>
-                  </td>
-                  <td className="title-column">{entry.title}</td>
+                  <td className="icon-column">{i + 1}.</td>
+                  <Link
+                    to={`/diary/${entry.date}`}
+                    state={{ entryTitle: entry.title }}
+                    style={{ textDecoration: "none" }}
+                  >
+                    <td className="title-column">{entry.title}</td>
+                  </Link>
                   <td className="date-column">
                     {entry.created_at &&
                       new Date(entry.created_at).toISOString().split("T")[0]}

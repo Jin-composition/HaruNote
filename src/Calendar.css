@@ -213,6 +213,7 @@ td:hover .cell-button {
 .title-column {
   width: 75%;
   font-size: 14px;
+  color: black;
 }
 
 .date-column {
