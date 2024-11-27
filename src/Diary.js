@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "./Diary.css";
 
 const Diary = () => {
@@ -39,39 +40,43 @@ const Diary = () => {
       isPublic,
     };
 
-    const headers = new Headers();
-    headers.append("Content-Type", "application/json");
+    const token = localStorage.getItem("token");
 
-    // try {
-    //   const jsonResponse = await fetch("http://harunote.com/diary", {
-    //     method: "POST",
-    //     headers,
-    //     body: JSON.stringify(payload),
-    //   });
+    try {
+      // 텍스트 데이터 업로드
+      const textResponse = await axios.post(
+        "http://localhost:8000/user/pages",
+        payload,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
-    //   const jsonResult = await jsonResponse.json();
-    //   console.log("Text Data Upload Success:", jsonResult);
+      // 이미지 파일이 있는 경우 이미지 업로드
+      if (imageFile) {
+        const formData = new FormData();
+        formData.append("image", imageFile);
 
-    //   if (imageFile) {
-    //     const formData = new FormData();
-    //     formData.append("image", imageFile);
+        const imageResponse = await axios.post(
+          "http://localhost:8000/user/pages/image",
+          formData
+        );
 
-    //     const imageResponse = await fetch("http://harunote.com/diary/image", {
-    //       method: "POST",
-    //       body: formData,
-    //     });
+        console.log("이미지가 저장되었습니다. ", imageResponse.data);
+      }
 
-    //     const imageResult = await imageResponse.json();
-    //     console.log("Image Upload Success:", imageResult);
-    //   }
+      console.log("textResponse ", textResponse);
 
-    //   alert("일기가 저장되었습니다.");
-    // } catch (error) {
-    //   console.error("Upload Failed:", error);
-    //   alert("일기가 저장되지 않았습니다.");
-    // }
-
-    console.log(payload, imageFile);
+      if (textResponse.status === 200) {
+        alert("일기가 저장되었습니다.");
+      }
+    } catch (error) {
+      console.error("Upload Failed:", error);
+      alert("일기가 저장되지 않았습니다.");
+    }
   };
 
   return (
