@@ -1,20 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "./Calendar.css";
 
 const Calendar = () => {
   const navigate = useNavigate();
   const [currentDate, setCurrentDate] = useState(new Date());
   const [activeTab, setActiveTab] = useState("calendar");
-
-  const [diaryEntries /*setDiaryEntries*/] = useState([
-    { id: 1, title: "뚜벅이 경주 여행 기록", date: "2024-11-01" },
-    { id: 2, title: "OO전자 (1차 면접) 취준 일기", date: "2024-11-14" },
-    { id: 3, title: "휴가 계획", date: "2024-11-28" },
-    { id: 4, title: "크리스마스 이브", date: "2024-12-24" },
-    { id: 5, title: "장한평 방문", date: "2024-11-01" },
-    { id: 6, title: "나이키매장", date: "2024-11-01" },
-  ]);
+  const [diaryEntries, setDiaryEntries] = useState([]);
 
   const handlePrevMonth = () => {
     setCurrentDate((prevDate) => {
@@ -83,6 +76,29 @@ const Calendar = () => {
   const firstDayOfMonth = daysInMonth[0].getDay();
 
   const totalCells = Math.ceil((firstDayOfMonth + daysInMonth.length) / 7) * 7;
+
+  const formatResponseDate = (dateString) => {
+    const date = new Date(dateString);
+    const formattedDate = date.toISOString().split("T")[0];
+    return formattedDate;
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:8000/user/pages");
+        const formattedData = response.data.map((item) => ({
+          ...item,
+          date: formatResponseDate(item.created_at), // created_at 포맷팅
+        }));
+        setDiaryEntries(formattedData);
+      } catch (err) {
+        alert("데이터를 가져오는 데 실패했습니다.");
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <div className="table-calendar">
