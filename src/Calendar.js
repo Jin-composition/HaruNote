@@ -9,6 +9,8 @@ const Calendar = () => {
   const { activeTab, setActiveTab } = useTab();
   const [currentDate, setCurrentDate] = useState(new Date());
   const [diaryEntries, setDiaryEntries] = useState([]);
+  const user_id = localStorage.getItem("user_id");
+  const token = localStorage.getItem("token");
 
   const handlePrevMonth = () => {
     setCurrentDate((prevDate) => {
@@ -80,17 +82,26 @@ const Calendar = () => {
 
   const formatResponseDate = (dateString) => {
     const date = new Date(dateString);
-    const formattedDate = date.toISOString().split("T")[0];
+    const formattedDate = date.toLocaleDateString("en-CA").split("T")[0];
     return formattedDate;
   };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/user/pages");
+        const response = await axios.get(
+          `http://localhost:8000/user/pages/by-owner/${user_id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`, // Authorization 헤더 추가
+            },
+          }
+        );
+
+        console.log("tq ", response.data);
         const formattedData = response.data.map((item) => ({
           ...item,
-          date: formatResponseDate(item.created_at), // created_at 포맷팅
+          date: formatResponseDate(item.scheduled_at), // scheduled_at 포맷팅
         }));
         setDiaryEntries(formattedData);
       } catch (err) {
@@ -100,6 +111,8 @@ const Calendar = () => {
 
     fetchData();
   }, []);
+
+  console.log("diaryEntries ", diaryEntries);
 
   return (
     <div className="table-calendar">
@@ -250,8 +263,8 @@ const Calendar = () => {
                     <td className="title-column">{entry.title}</td>
                   </Link>
                   <td className="date-column">
-                    {entry.created_at &&
-                      new Date(entry.created_at).toISOString().split("T")[0]}
+                    {entry.scheduled_at &&
+                      new Date(entry.scheduled_at).toISOString().split("T")[0]}
                   </td>
                 </tr>
               ))}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 import axios from "axios";
 import "./Diary.css";
 
@@ -7,6 +7,7 @@ const Diary = () => {
   const [isPublic, setIsPublic] = useState(true);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const { date } = useParams();
   const [image, setImage] = useState(null);
   const [imageFile, setImageFile] = useState(null);
   const [diaryData, setDiaryData] = useState([]);
@@ -14,6 +15,8 @@ const Diary = () => {
   const location = useLocation();
   const { entryTitle } = location.state || {};
   const token = localStorage.getItem("token");
+
+  console.log("date ", date);
 
   const toggleVisibility = () => {
     setIsPublic(!isPublic);
@@ -42,8 +45,10 @@ const Diary = () => {
       title,
       content,
       isPublic,
+      scheduled_at: date,
     };
 
+    console.log("payload ", payload);
     try {
       // 텍스트 데이터 업로드
       const textResponse = await axios.post(

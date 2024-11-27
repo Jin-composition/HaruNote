@@ -31,7 +31,8 @@ const Signin = () => {
       });
 
       // 토큰 저장 (예: 로컬 스토리지)
-      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("token", response.data.access_token);
+      localStorage.setItem("user_id", response.data.user_id);
 
       navigate("/calendar");
     } catch (err) {
