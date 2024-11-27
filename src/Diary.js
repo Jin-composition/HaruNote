@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import "./Diary.css";
 
@@ -9,7 +9,11 @@ const Diary = () => {
   const [content, setContent] = useState("");
   const [image, setImage] = useState(null);
   const [imageFile, setImageFile] = useState(null);
+  const [diaryData, setDiaryData] = useState([]);
   const navigate = useNavigate();
+  const location = useLocation();
+  const { entryTitle } = location.state || {};
+  const token = localStorage.getItem("token");
 
   const toggleVisibility = () => {
     setIsPublic(!isPublic);
@@ -39,8 +43,6 @@ const Diary = () => {
       content,
       isPublic,
     };
-
-    const token = localStorage.getItem("token");
 
     try {
       // 텍스트 데이터 업로드
@@ -72,6 +74,7 @@ const Diary = () => {
 
       if (textResponse.status === 200) {
         alert("일기가 저장되었습니다.");
+        navigate("/calendar");
       }
     } catch (error) {
       console.error("Upload Failed:", error);
@@ -79,6 +82,39 @@ const Diary = () => {
     }
   };
 
+  useEffect(() => {
+    if (!entryTitle) {
+      return;
+    }
+
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8000/user/pages/?title=${entryTitle}`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (response.data.length > 0) {
+          const entry = response.data[0]; // 하나의 일기만 있는 경우
+          setDiaryData(entry);
+          setTitle(entry.title);
+          setContent(entry.content);
+          setIsPublic(entry.public);
+          setImage(entry.imageUrl || null); // 이미지가 있다면 이미지 URL 설정
+        }
+      } catch (err) {
+        alert("일기 데이터를 가져오는 데 실패했습니다.");
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  console.log("entryTitle ", entryTitle);
   return (
     <div className="diary-container">
       <div className="title-section">

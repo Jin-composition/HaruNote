@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import "./Calendar.css";
 
@@ -209,12 +209,18 @@ const Calendar = () => {
                             >
                               +
                             </button>
+
                             <div className="entry-container">
                               {entries.length > 0 &&
                                 entries.map((entry) => (
-                                  <p key={entry.id} className="entry-title">
-                                    {entry.title}
-                                  </p>
+                                  <Link
+                                    key={entry.id}
+                                    to={`/diary/${diaryURL}`}
+                                    state={{ entryTitle: entry.title }}
+                                    style={{ textDecoration: "none" }}
+                                  >
+                                    <p className="entry-title">{entry.title}</p>
+                                  </Link>
                                 ))}
                             </div>
                           </td>
@@ -232,20 +238,18 @@ const Calendar = () => {
           <h2>나의 일기장 목록</h2>
           <table className="list-table">
             <tbody>
-              <tr className="list-item">
-                <td className="icon-column">
-                  <i className="file-icon"></i>
-                </td>
-                <td className="title-column">뚜벅이 경주 여행 기록</td>
-                <td className="date-column">2024.11.23</td>
-              </tr>
-              <tr>
-                <td className="icon-column">
-                  <i className="file-icon"></i>
-                </td>
-                <td className="title-column">OO전자 (1차 면접) 취준 일기</td>
-                <td className="date-column">2024.09.14</td>
-              </tr>
+              {diaryEntries.map((entry, i) => (
+                <tr className="list-item" key={i}>
+                  <td className="icon-column">
+                    <i className="file-icon"></i>
+                  </td>
+                  <td className="title-column">{entry.title}</td>
+                  <td className="date-column">
+                    {entry.created_at &&
+                      new Date(entry.created_at).toISOString().split("T")[0]}
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
