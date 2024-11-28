@@ -30,6 +30,9 @@ const Signin = () => {
         password,
       });
 
+      // 토큰 저장 (예: 로컬 스토리지)
+      localStorage.setItem("token", response.data.access_token);
+
       navigate("/calendar");
     } catch (err) {
       console.error(err);
