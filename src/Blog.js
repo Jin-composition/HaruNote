@@ -50,7 +50,8 @@ const Blog = () => {
           {filteredEntries.length > 0 ? (
             filteredEntries.map((entry) => (
               <div key={entry.id} className="blog-entry">
-                <h3>{entry.title}</h3>
+                <h3 className="entry-title1">{entry.title}</h3>
+                <h3 className="entry-date">{entry.created_at.split("T")[0]}</h3>
               </div>
             ))
           ) : (
