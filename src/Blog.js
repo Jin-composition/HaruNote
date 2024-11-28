@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import "./Blog.css";
 
@@ -49,10 +50,19 @@ const Blog = () => {
         <div className="search-results">
           {filteredEntries.length > 0 ? (
             filteredEntries.map((entry) => (
-              <div key={entry.id} className="blog-entry">
-                <h3 className="entry-title1">{entry.title}</h3>
-                <h3 className="entry-date">{entry.created_at.split("T")[0]}</h3>
-              </div>
+              <Link
+                key={entry.id}
+                to={`/diary/${entry.scheduled_at.split("T")[0]}`}
+                state={{ entryTitle: entry.title }}
+                style={{ textDecoration: "none" }}
+              >
+                <div className="blog-entry">
+                  <h3 className="entry-title1">{entry.title}</h3>
+                  <h3 className="entry-date">
+                    {entry.created_at.split("T")[0]}
+                  </h3>
+                </div>
+              </Link>
             ))
           ) : (
             <p>검색 결과가 없습니다.</p>
