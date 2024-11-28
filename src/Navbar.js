@@ -11,6 +11,14 @@ const Navbar = () => {
     navigate("/signin");
   };
 
+  const handleNavigation = (path) => {
+    if (!user_id) {
+      alert("로그인이 필요한 서비스 입니다.");
+    } else {
+      navigate(path);
+    }
+  };
+
   return (
     <header className="navbar">
       <Link to="/signin" className="navLink">
@@ -21,12 +29,26 @@ const Navbar = () => {
         <ul className="navList">
           <div className="navLine"></div>
           <li className="navItem">
-            <Link to="/calendar" className="navLink">
+            <Link
+              to="/calendar"
+              className="navLink"
+              onClick={(event) => {
+                event.preventDefault();
+                handleNavigation("/calendar");
+              }}
+            >
               Calendar
             </Link>
           </li>
           <li className="navItem">
-            <Link to="/blog" className="navLink">
+            <Link
+              to="/blog"
+              className="navLink"
+              onClick={(event) => {
+                event.preventDefault();
+                handleNavigation("/blog");
+              }}
+            >
               Blog
             </Link>
           </li>

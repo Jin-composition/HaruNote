@@ -1,8 +1,16 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import "./NavbarAdm.css";
 
 const NavbarAdm = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/signin");
+    window.location.reload();
+  };
+
   return (
     <header className="navbarAdm">
       <Link to="/signin" className="navLinkAdm">
@@ -14,7 +22,7 @@ const NavbarAdm = () => {
           <div className="navLineAdm"></div>
 
           <li className="navLinkWrapperAdm">
-            <Link to="/signup" className="navLinkAdm">
+            <Link to="/signup" className="navLinkAdm" onClick={handleLogout}>
               Logout
             </Link>
           </li>

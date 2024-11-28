@@ -32,8 +32,14 @@ const Signin = () => {
 
       localStorage.setItem("token", response.data.access_token);
       localStorage.setItem("user_id", response.data.user_id);
+      localStorage.setItem("is_admin", response.data.is_admin);
 
-      navigate("/calendar");
+      if (response.data.is_admin === true) {
+        navigate("/admin");
+        window.location.reload();
+      } else {
+        navigate("/calendar");
+      }
     } catch (err) {
       console.error(err);
       alert("로그인에 실패했습니다. 다시 시도해주세요.");

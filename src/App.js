@@ -11,21 +11,30 @@ import NavbarAdm from "./NavbarAdm";
 import Admin from "./Admin";
 
 const App = () => {
+  const is_admin = Boolean(localStorage.getItem("is_admin"));
+
   return (
     <>
       <TabProvider>
         <BrowserRouter>
-          <Navbar />
-          {/* <NavbarAdm /> */}
+          {is_admin === true ? <NavbarAdm /> : <Navbar />}
           <Routes>
-            {/* <Route path="/" element={<Admin />} /> */}
-            <Route path="/" element={<Signin />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/signin" element={<Signin />} />
-            <Route path="/calendar" element={<Calendar />} />
-            <Route path="/diary/:user_id/:date" element={<Diary />} />
-            <Route path="/diary/:user_id/:date/:title" element={<Diary />} />
-            <Route path="/blog" element={<Blog />} />
+            {is_admin === true ? (
+              <Route path="/admin" element={<Admin />} />
+            ) : (
+              <>
+                <Route path="/" element={<Signin />} />
+                <Route path="/signup" element={<Signup />} />
+                <Route path="/signin" element={<Signin />} />
+                <Route path="/calendar" element={<Calendar />} />
+                <Route path="/diary/:user_id/:date" element={<Diary />} />
+                <Route
+                  path="/diary/:user_id/:date/:title"
+                  element={<Diary />}
+                />
+                <Route path="/blog" element={<Blog />} />
+              </>
+            )}
           </Routes>
         </BrowserRouter>
       </TabProvider>
