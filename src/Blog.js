@@ -55,7 +55,11 @@ const Blog = () => {
                 to={`/diary/${entry.owner_id}/${
                   entry.scheduled_at.split("T")[0]
                 }/${entry.id}`}
-                state={{ entryTitle: entry.title }}
+                state={{
+                  entryTitle: entry.title,
+                  id: entry.id,
+                  entryOwner: entry.owner_id,
+                }}
                 style={{ textDecoration: "none" }}
               >
                 <div className="blog-entry">

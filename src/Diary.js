@@ -8,9 +8,9 @@ const Diary = () => {
   const location = useLocation();
   const { date } = useParams();
   const token = localStorage.getItem("token");
+  const user_id = Number(localStorage.getItem("user_id"));
 
-  const { entryTitle, id } = location.state || {};
-  console.log("id ", id);
+  const { entryTitle, id, entryOwner } = location.state || {};
 
   const [isPublic, setIsPublic] = useState(true);
   const [title, setTitle] = useState("");
@@ -202,29 +202,33 @@ const Diary = () => {
           onChange={(e) => setContent(e.target.value)}
         />
       </div>
-      <div className="button-container">
-        <button className="submit-button" onClick={handleSubmit}>
-          {id ? "수정" : "저장"}
-        </button>
-        {id ? (
+      {user_id === entryOwner ? (
+        <div className="button-container">
+          <button className="submit-button" onClick={handleSubmit}>
+            {id ? "수정" : "저장"}
+          </button>
+          {id ? (
+            <button
+              style={{ marginLeft: "10px" }}
+              className="cancel-button"
+              onClick={handleDelete}
+            >
+              삭제
+            </button>
+          ) : (
+            ""
+          )}
           <button
             style={{ marginLeft: "10px" }}
             className="cancel-button"
-            onClick={handleDelete}
+            onClick={() => navigate(-1)}
           >
-            삭제
+            취소
           </button>
-        ) : (
-          ""
-        )}
-        <button
-          style={{ marginLeft: "10px" }}
-          className="cancel-button"
-          onClick={() => navigate(-1)}
-        >
-          취소
-        </button>
-      </div>
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 };
