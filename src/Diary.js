@@ -84,11 +84,17 @@ const Diary = () => {
       // 이미지 파일이 있는 경우 이미지 업로드
       if (imageFile) {
         const formData = new FormData();
-        formData.append("image", imageFile);
+        formData.append("file", imageFile);
 
         const imageResponse = await axios.post(
-          "http://localhost:8000/user/pages/image",
-          formData
+          "http://localhost:8000/user/upload",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `Bearer ${token}`, // 필요한 경우 인증 토큰 추가
+            },
+          }
         );
 
         console.log("이미지가 저장되었습니다. ", imageResponse.data);
