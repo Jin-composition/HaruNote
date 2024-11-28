@@ -1,20 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { useTab } from "./TabContext";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import "./Admin.css";
 
 const Admin = () => {
-  const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
   const { activeTab, setActiveTab } = useTab();
   const [title, setTitle] = useState("");
   const [diaryEntries, setDiaryEntries] = useState([]);
   const [userList, setUserList] = useState([]);
+
   const filteredEntries = diaryEntries.filter((entry) =>
-    entry.username.toLowerCase().includes(title.toLowerCase())
+    entry.title.toLowerCase().includes(title.toLowerCase())
   );
 
   useEffect(() => {
@@ -38,7 +37,27 @@ const Admin = () => {
     };
 
     fetchData();
-  }, []);
+  }, []); // eslint-disable-next-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8000/user/pages`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (response.status === 200) {
+          setDiaryEntries(response.data);
+        }
+      } catch (err) {
+        alert("블로그를 가져오는 데 실패했습니다.");
+      }
+    };
+
+    fetchData();
+  }, []); // eslint-disable-next-line react-hooks/exhaustive-deps
 
   const handleDeleteUser = (user_email) => {
     const fetchData = async () => {
@@ -127,9 +146,9 @@ const Admin = () => {
               filteredEntries.map((entry) => (
                 <Link
                   key={entry.id}
-                  // to={`/diary/${entry.owner_id}/${
-                  //   entry.created_at.split("T")[0]
-                  // }/${entry.id}`}
+                  to={`/diary/${entry.owner_id}/${
+                    entry.created_at.split("T")[0]
+                  }/${entry.id}`}
                   state={{
                     entryTitle: entry.title,
                     id: entry.id,

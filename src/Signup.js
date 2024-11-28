@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import signup from "./assets/signup.png";
 import "./Signup.css";
 
@@ -9,6 +10,7 @@ const Signup = () => {
   const [error, setError] = useState(null); // 에러 상태 추가
   const [loading, setLoading] = useState(false); // 로딩 상태 추가
   const [successMessage, setSuccessMessage] = useState(null); // 성공 메시지 상태
+  const navigate = useNavigate();
 
   const handleSignup = async () => {
     if (!username || !email || !password) {
@@ -40,6 +42,7 @@ const Signup = () => {
         setName("");
         setEmail("");
         setPassword("");
+        navigate("/signin");
       } else {
         alert(data.detail || "회원가입에 실패했습니다.");
       }

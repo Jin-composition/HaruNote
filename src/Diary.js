@@ -8,7 +8,8 @@ const Diary = () => {
   const location = useLocation();
   const { date } = useParams();
   const token = localStorage.getItem("token");
-  const user_id = Number(localStorage.getItem("user_id"));
+  const user_id = localStorage.getItem("user_id");
+  const is_admin = localStorage.getItem("is_admin");
 
   const { entryTitle, id, entryOwner } = location.state || {};
 
@@ -150,7 +151,6 @@ const Diary = () => {
         }
       );
 
-      console.log("response ", response);
       if (response.status === 200) {
         alert("일기를 삭제하였습니다.");
         navigate("/calendar");
@@ -202,7 +202,33 @@ const Diary = () => {
           onChange={(e) => setContent(e.target.value)}
         />
       </div>
-      {user_id === entryOwner ? (
+      {is_admin === "true" ? (
+        <div className="button-container">
+          <button className="cancel-button" onClick={handleDelete}>
+            삭제
+          </button>
+          <button
+            style={{ marginLeft: "10px" }}
+            className="cancel-button"
+            onClick={() => navigate(-1)}
+          >
+            취소
+          </button>
+        </div>
+      ) : entryOwner === undefined ? (
+        <div className="button-container">
+          <button className="submit-button" onClick={handleSubmit}>
+            저장
+          </button>
+          <button
+            style={{ marginLeft: "10px" }}
+            className="cancel-button"
+            onClick={() => navigate(-1)}
+          >
+            취소
+          </button>
+        </div>
+      ) : entryOwner == user_id ? (
         <div className="button-container">
           <button className="submit-button" onClick={handleSubmit}>
             {id ? "수정" : "저장"}

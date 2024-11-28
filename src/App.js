@@ -20,7 +20,13 @@ const App = () => {
           {is_admin === true ? <NavbarAdm /> : <Navbar />}
           <Routes>
             {is_admin === true ? (
-              <Route path="/admin" element={<Admin />} />
+              <>
+                <Route path="/admin" element={<Admin />} />
+                <Route
+                  path="/diary/:user_id/:date/:title"
+                  element={<Diary />}
+                />
+              </>
             ) : (
               <>
                 <Route path="/" element={<Signin />} />

@@ -22,7 +22,9 @@ const Blog = () => {
           },
         });
 
-        setDiaryEntries(response.data);
+        if (response.status === 200) {
+          setDiaryEntries(response.data);
+        }
       } catch (err) {
         alert("블로그를 가져오는 데 실패했습니다.");
       }

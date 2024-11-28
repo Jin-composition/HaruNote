@@ -232,6 +232,7 @@ const Calendar = () => {
                                     state={{
                                       entryTitle: entry.title,
                                       id: entry.id,
+                                      entryOwner: user_id,
                                     }}
                                     style={{ textDecoration: "none" }}
                                   >
