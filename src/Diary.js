@@ -131,6 +131,28 @@ const Diary = () => {
     fetchData();
   }, []);
 
+  const handleDelete = async () => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:8000/user/pages/${id}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      console.log("response ", response);
+      if (response.status === 200) {
+        alert("일기를 삭제하였습니다.");
+        navigate("/calendar");
+      }
+    } catch (err) {
+      alert("일기를 삭제하는데 실패했습니다.");
+    }
+  };
+
   return (
     <div className="diary-container">
       <div className="title-section">
@@ -177,6 +199,17 @@ const Diary = () => {
         <button className="submit-button" onClick={handleSubmit}>
           {id ? "수정" : "저장"}
         </button>
+        {id ? (
+          <button
+            style={{ marginLeft: "10px" }}
+            className="cancel-button"
+            onClick={handleDelete}
+          >
+            삭제
+          </button>
+        ) : (
+          ""
+        )}
         <button
           style={{ marginLeft: "10px" }}
           className="cancel-button"

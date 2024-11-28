@@ -236,10 +236,6 @@ td:hover .cell-button {
   margin-top: 10px;
 }
 
-.entry-item {
-  position: relative;
-}
-
 .entry-title {
   font-size: 12px;
   color: #333;
@@ -256,29 +252,4 @@ td:hover .cell-button {
   display: block;
   max-width: 90%;
   box-sizing: border-box;
-}
-
-.delete-button {
-  position: absolute;
-  top: 0;
-  right: 0;
-  color: white;
-  border: none;
-  padding: 1px;
-  cursor: pointer;
-  font-size: 12px;
-  border-radius: 50%;
-  width: 20px;
-  height: 18px;
-  text-align: center;
-  line-height: 16px;
-  margin-right: 13px;
-  margin-top: 3px;
-  background-color: white;
-}
-
-.delete-button:hover {
-  background-color: #f0f0f0;
-  color: black;
-  z-index: 2; /* 활성 탭을 앞으로 가져오기 */
 }

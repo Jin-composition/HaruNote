@@ -111,31 +111,6 @@ const Calendar = () => {
     fetchData();
   }, []);
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await axios.delete(
-  //         `http://localhost:8000/user/pages/${id}`,
-  //         {
-  //           headers: {
-  //             Authorization: `Bearer ${token}`,
-  //           },
-  //         }
-  //       );
-
-  //       const formattedData = response.data.map((item) => ({
-  //         ...item,
-  //         date: formatResponseDate(item.scheduled_at),
-  //       }));
-  //       setDiaryEntries(formattedData);
-  //     } catch (err) {
-  //       alert("일기를 삭제하는데 실패했습니다.");
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []);
-
   return (
     <div className="table-calendar">
       {/* 탭 영역 */}
@@ -249,30 +224,17 @@ const Calendar = () => {
                             <div className="entry-container">
                               {entries.length > 0 &&
                                 entries.map((entry) => (
-                                  <div className="entry-item">
-                                    <Link
-                                      key={entry.id}
-                                      to={`/diary/${diaryURL}`}
-                                      state={{
-                                        entryTitle: entry.title,
-                                        id: entry.id,
-                                      }}
-                                      style={{ textDecoration: "none" }}
-                                    >
-                                      <p className="entry-title">
-                                        {entry.title}
-                                      </p>
-                                      <button
-                                        className="delete-button"
-                                        onClick={(e) => {
-                                          e.stopPropagation(); // 이벤트 전파 중단
-                                          // handleDelete(entry.id);
-                                        }}
-                                      >
-                                        x
-                                      </button>
-                                    </Link>
-                                  </div>
+                                  <Link
+                                    key={entry.id}
+                                    to={`/diary/${diaryURL}`}
+                                    state={{
+                                      entryTitle: entry.title,
+                                      id: entry.id,
+                                    }}
+                                    style={{ textDecoration: "none" }}
+                                  >
+                                    <p className="entry-title">{entry.title}</p>
+                                  </Link>
                                 ))}
                             </div>
                           </td>
