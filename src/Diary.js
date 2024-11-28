@@ -42,7 +42,7 @@ const Diary = () => {
     const payload = {
       title,
       content,
-      isPublic,
+      public: isPublic,
       scheduled_at: date,
     };
 

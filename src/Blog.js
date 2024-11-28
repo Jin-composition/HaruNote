@@ -1,22 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import "./Blog.css";
 
 const Blog = () => {
+  const token = localStorage.getItem("token");
   const [title, setTitle] = useState("");
 
-  const [diaryEntries /*setDiaryEntries*/] = useState([
-    { id: 1, title: "뚜벅이 경주 여행 기록" },
-    { id: 2, title: "OO전자 (1차 면접) 취준 일기" },
-    { id: 3, title: "휴가 계획" },
-    { id: 4, title: "크리스마스 이브" },
-    { id: 2, title: "OO전자 (1차 면접) 취준 일기" },
-    { id: 3, title: "휴가 계획" },
-    { id: 4, title: "크리스마스 이브" },
-  ]);
+  const [diaryEntries, setDiaryEntries] = useState([]);
 
   const filteredEntries = diaryEntries.filter((entry) =>
     entry.title.toLowerCase().includes(title.toLowerCase())
   );
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8000/user/pages`, {
+          headers: {
+            Authorization: `Bearer ${token}`, // Authorization 헤더 추가
+          },
+        });
+
+        setDiaryEntries(response.data);
+      } catch (err) {
+        alert("데이터를 가져오는 데 실패했습니다.");
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <>
