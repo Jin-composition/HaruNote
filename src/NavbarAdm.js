@@ -4,22 +4,22 @@ import "./NavbarAdm.css";
 
 function NavbarAdm() {
   return (
-    <header className="navbar">
-      <Link to="/signin" className="navLink">
-        <div className="logo">HARU NOTE</div>
+    <header className="navbarAdm">
+      <Link to="/signin" className="navLinkAdm">
+        <div className="logoAdm">HARU NOTE</div>
       </Link>
 
       <nav>
-        <ul className="navList">
-          <div className="navLine"></div>
+        <ul className="navListAdm">
+          <div className="navLineAdm"></div>
 
-          <li className="navLinkWrapper">
-            <Link to="/signup" className="navLink">
+          <li className="navLinkWrapperAdm">
+            <Link to="/signup" className="navLinkAdm">
               Logout
             </Link>
           </li>
-          <li className="navItem2">
-            <Link to="/signin" className="navLinkSignin">
+          <li className="navItem2Adm">
+            <Link to="/signin" className="navLinkAccount">
               Account
             </Link>
           </li>

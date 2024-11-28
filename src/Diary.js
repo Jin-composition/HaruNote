@@ -202,33 +202,33 @@ const Diary = () => {
           onChange={(e) => setContent(e.target.value)}
         />
       </div>
-      {user_id === entryOwner ? (
-        <div className="button-container">
-          <button className="submit-button" onClick={handleSubmit}>
-            {id ? "수정" : "저장"}
-          </button>
-          {id ? (
-            <button
-              style={{ marginLeft: "10px" }}
-              className="cancel-button"
-              onClick={handleDelete}
-            >
-              삭제
-            </button>
-          ) : (
-            ""
-          )}
+      {/* {user_id === entryOwner ? ( */}
+      <div className="button-container">
+        <button className="submit-button" onClick={handleSubmit}>
+          {id ? "수정" : "저장"}
+        </button>
+        {id ? (
           <button
             style={{ marginLeft: "10px" }}
             className="cancel-button"
-            onClick={() => navigate(-1)}
+            onClick={handleDelete}
           >
-            취소
+            삭제
           </button>
-        </div>
-      ) : (
+        ) : (
+          ""
+        )}
+        <button
+          style={{ marginLeft: "10px" }}
+          className="cancel-button"
+          onClick={() => navigate(-1)}
+        >
+          취소
+        </button>
+      </div>
+      {/* ) : (
         ""
-      )}
+      )} */}
     </div>
   );
 };

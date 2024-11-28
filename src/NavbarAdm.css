@@ -1,5 +1,5 @@
 /* Navbar.css */
-.navbar {
+.navbarAdm {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -10,14 +10,14 @@
   margin: 0 auto;
 }
 
-.logo {
+.logoAdm {
   font-size: 24px;
   font-weight: lighter;
   margin-left: 50px;
   color: white;
 }
 
-.navList {
+.navListAdm {
   display: flex;
   list-style-type: none;
   padding: 11px 0px;
@@ -32,7 +32,7 @@
   position: relative;
 }
 
-.navLine {
+.navLineAdm {
   position: absolute;
   top: 54%;
   left: -320%;
@@ -47,13 +47,13 @@
   margin: 0 50px;
 }
 
-.navItem2 {
+.navItem2Adm {
   list-style: none;
   margin-left: 50px;
   margin-right: 10px;
 }
 
-.navLinkWrapper {
+.navLinkWrapperAdm {
   display: inline-block;
   background-color: #fff;
   color: #333;
@@ -66,13 +66,13 @@
   margin-left: 10px;
 }
 
-.navLink {
+.navLinkAdm {
   color: black;
   text-decoration: none;
   font-size: 18px;
 }
 
-.navLinkSignin {
+.navLinkAccount {
   display: inline-block;
   background-color: black;
   color: white;
