@@ -43,13 +43,13 @@
   border-top: none;
 }
 
-.list-container {
+.list-containerAdm {
   padding: 20px;
   height: 530px;
   background-color: rgb(247, 247, 245);
 }
 
-.list-container h2 {
+.list-containerAdm h2 {
   font-size: 18px;
   margin-bottom: 10px;
 }

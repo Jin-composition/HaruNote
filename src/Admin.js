@@ -66,7 +66,7 @@ const Admin = () => {
       {/* 조건부 렌더링 */}
       {activeTab === "Account" && (
         <>
-          <div className="list-container">
+          <div className="list-containerAdm">
             <h2>사용자 계정 목록</h2>
             <table className="list-table">
               <tbody>
