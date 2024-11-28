@@ -8,9 +8,9 @@ const Diary = () => {
   const location = useLocation();
   const { date } = useParams();
   const token = localStorage.getItem("token");
-  const user_id = localStorage.getItem("token");
 
   const { entryTitle, id } = location.state || {};
+  console.log("id ", id);
 
   const [isPublic, setIsPublic] = useState(true);
   const [title, setTitle] = useState("");

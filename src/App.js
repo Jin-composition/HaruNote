@@ -20,6 +20,7 @@ const App = () => {
             <Route path="/signin" element={<Signin />} />
             <Route path="/calendar" element={<Calendar />} />
             <Route path="/diary/:user_id/:date" element={<Diary />} />
+            <Route path="/diary/:user_id/:date/:title" element={<Diary />} />
             <Route path="/blog" element={<Blog />} />
           </Routes>
         </BrowserRouter>

@@ -54,7 +54,7 @@ const Blog = () => {
                 key={entry.id}
                 to={`/diary/${entry.owner_id}/${
                   entry.scheduled_at.split("T")[0]
-                }`}
+                }/${entry.id}`}
                 state={{ entryTitle: entry.title }}
                 style={{ textDecoration: "none" }}
               >

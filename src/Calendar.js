@@ -216,7 +216,9 @@ const Calendar = () => {
                           >
                             <button
                               className="cell-button"
-                              onClick={() => navigate(`/diary/${diaryURL}`)}
+                              onClick={() =>
+                                navigate(`/diary/${user_id}/${diaryURL}/`)
+                              }
                             >
                               +
                             </button>
@@ -226,7 +228,7 @@ const Calendar = () => {
                                 entries.map((entry) => (
                                   <Link
                                     key={entry.id}
-                                    to={`/diary/${user_id}/${diaryURL}`}
+                                    to={`/diary/${user_id}/${diaryURL}/${entry.id}`}
                                     state={{
                                       entryTitle: entry.title,
                                       id: entry.id,
@@ -256,7 +258,7 @@ const Calendar = () => {
                 <tr className="list-item" key={i}>
                   <td className="icon-column">{i + 1}.</td>
                   <Link
-                    to={`/diary/${user_id}/${entry.date}`}
+                    to={`/diary/${user_id}/${entry.date}/${entry.id}`}
                     state={{ entryTitle: entry.title }}
                     style={{ textDecoration: "none" }}
                   >
