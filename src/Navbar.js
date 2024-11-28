@@ -1,8 +1,16 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import "./Navbar.css";
 
-function Navbar() {
+const Navbar = () => {
+  const navigate = useNavigate();
+  const user_id = localStorage.getItem("user_id");
+
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/signin");
+  };
+
   return (
     <header className="navbar">
       <Link to="/signin" className="navLink">
@@ -28,14 +36,24 @@ function Navbar() {
             </Link>
           </li>
           <li className="navItem2">
-            <Link to="/signin" className="navLinkSignin">
-              Sign in
-            </Link>
+            {user_id ? (
+              <button
+                style={{ cursor: "pointer" }}
+                className="navLinkSignin"
+                onClick={handleLogout}
+              >
+                Logout
+              </button>
+            ) : (
+              <Link to="/signin" className="navLinkSignin">
+                Sign in
+              </Link>
+            )}
           </li>
         </ul>
       </nav>
     </header>
   );
-}
+};
 
 export default Navbar;

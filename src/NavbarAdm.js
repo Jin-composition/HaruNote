@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./NavbarAdm.css";
 
-function NavbarAdm() {
+const NavbarAdm = () => {
   return (
     <header className="navbarAdm">
       <Link to="/signin" className="navLinkAdm">
@@ -27,6 +27,6 @@ function NavbarAdm() {
       </nav>
     </header>
   );
-}
+};
 
 export default NavbarAdm;
