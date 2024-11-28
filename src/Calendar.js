@@ -226,7 +226,7 @@ const Calendar = () => {
                                 entries.map((entry) => (
                                   <Link
                                     key={entry.id}
-                                    to={`/diary/${diaryURL}`}
+                                    to={`/diary/${user_id}/${diaryURL}`}
                                     state={{
                                       entryTitle: entry.title,
                                       id: entry.id,
@@ -256,7 +256,7 @@ const Calendar = () => {
                 <tr className="list-item" key={i}>
                   <td className="icon-column">{i + 1}.</td>
                   <Link
-                    to={`/diary/${entry.date}`}
+                    to={`/diary/${user_id}/${entry.date}`}
                     state={{ entryTitle: entry.title }}
                     style={{ textDecoration: "none" }}
                   >

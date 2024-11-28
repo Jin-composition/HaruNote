@@ -19,7 +19,7 @@ const App = () => {
             <Route path="/signup" element={<Signup />} />
             <Route path="/signin" element={<Signin />} />
             <Route path="/calendar" element={<Calendar />} />
-            <Route path="/diary/:date" element={<Diary />} />
+            <Route path="/diary/:user_id/:date" element={<Diary />} />
             <Route path="/blog" element={<Blog />} />
           </Routes>
         </BrowserRouter>

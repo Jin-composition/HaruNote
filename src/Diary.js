@@ -4,17 +4,19 @@ import axios from "axios";
 import "./Diary.css";
 
 const Diary = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { date } = useParams();
+  const token = localStorage.getItem("token");
+  const user_id = localStorage.getItem("token");
+
+  const { entryTitle, id } = location.state || {};
+
   const [isPublic, setIsPublic] = useState(true);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const { date } = useParams();
   const [image, setImage] = useState(null);
   const [imageFile, setImageFile] = useState(null);
-  const [diaryData, setDiaryData] = useState([]);
-  const navigate = useNavigate();
-  const location = useLocation();
-  const { entryTitle, id } = location.state || {};
-  const token = localStorage.getItem("token");
 
   const toggleVisibility = () => {
     setIsPublic(!isPublic);
@@ -123,7 +125,6 @@ const Diary = () => {
         );
         if (response.data.length > 0) {
           const entry = response.data[0]; // 하나의 일기만 있는 경우
-          setDiaryData(entry);
           setTitle(entry.title);
           setContent(entry.content);
           setIsPublic(entry.public);

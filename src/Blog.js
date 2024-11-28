@@ -52,7 +52,9 @@ const Blog = () => {
             filteredEntries.map((entry) => (
               <Link
                 key={entry.id}
-                to={`/diary/${entry.scheduled_at.split("T")[0]}`}
+                to={`/diary/${entry.owner_id}/${
+                  entry.scheduled_at.split("T")[0]
+                }`}
                 state={{ entryTitle: entry.title }}
                 style={{ textDecoration: "none" }}
               >
