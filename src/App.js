@@ -7,6 +7,8 @@ import Signin from "./Signin";
 import Calendar from "./Calendar";
 import Diary from "./Diary";
 import Blog from "./Blog";
+import NavbarAdm from "./NavbarAdm";
+import Admin from "./Admin";
 
 const App = () => {
   return (
@@ -14,7 +16,9 @@ const App = () => {
       <TabProvider>
         <BrowserRouter>
           <Navbar />
+          {/* <NavbarAdm /> */}
           <Routes>
+            {/* <Route path="/" element={<Admin />} /> */}
             <Route path="/" element={<Signin />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/signin" element={<Signin />} />

@@ -18,13 +18,13 @@ const Blog = () => {
       try {
         const response = await axios.get(`http://localhost:8000/user/pages`, {
           headers: {
-            Authorization: `Bearer ${token}`, // Authorization 헤더 추가
+            Authorization: `Bearer ${token}`,
           },
         });
 
         setDiaryEntries(response.data);
       } catch (err) {
-        alert("데이터를 가져오는 데 실패했습니다.");
+        alert("블로그를 가져오는 데 실패했습니다.");
       }
     };
 
