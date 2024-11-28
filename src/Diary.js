@@ -153,7 +153,11 @@ const Diary = () => {
 
       if (response.status === 200) {
         alert("일기를 삭제하였습니다.");
-        navigate("/calendar");
+        if (is_admin === "true") {
+          navigate("/admin");
+        } else {
+          navigate("/calendar");
+        }
       }
     } catch (err) {
       alert("일기를 삭제하는데 실패했습니다.");
