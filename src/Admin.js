@@ -12,59 +12,78 @@ const Admin = () => {
   const { activeTab, setActiveTab } = useTab();
   const [title, setTitle] = useState("");
   const [diaryEntries, setDiaryEntries] = useState([]);
-
+  const [userList, setUserList] = useState([]);
   const filteredEntries = diaryEntries.filter((entry) =>
-    entry.title.toLowerCase().includes(title.toLowerCase())
+    entry.username.toLowerCase().includes(title.toLowerCase())
   );
-
-  const [userList, setUserList] = useState([
-    { id: 1, username: "진하영", email: "wls@gmail.com" },
-    { id: 2, username: "류지예", email: "ryu@naver.com" },
-    { id: 3, username: "박은지", email: "park@gmail.com" },
-    { id: 4, username: "백현빈", email: "hyeon@daum.com" },
-    { id: 5, username: "조경호", email: "cho@naver.com" },
-  ]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/user/pages`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await axios.get(
+          `http://localhost:8000/user/users/details`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
-        setDiaryEntries(response.data);
+        if (response.status === 200) {
+          setUserList(response.data);
+        }
       } catch (err) {
-        alert("블로그를 가져오는 데 실패했습니다.");
+        alert("사용자 목록을 가져오는 데 실패했습니다.");
       }
     };
 
     fetchData();
   }, []);
 
-  console.log("filteredEntries ", filteredEntries);
+  const handleDeleteUser = (user_email) => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.delete(
+          `http://localhost:8000/user/users/email/${user_email}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        if (response.status === 200) {
+          alert("사용자를 삭제하였습니다.");
+          window.location.reload();
+        }
+      } catch (err) {
+        alert("사용자를 삭제하는 중에 오류가 발생했습니다.");
+      }
+    };
+
+    fetchData();
+  };
 
   return (
     <div className="admin">
       {/* 탭 영역 */}
       <div className="tab-header">
         <button
-          className={`tab-button ${activeTab === "Account" ? "active" : ""}`}
-          onClick={() => setActiveTab("Account")}
+          className={`tab-button ${activeTab === "account" ? "active" : ""}`}
+          onClick={() => setActiveTab("account")}
         >
           Account
         </button>
         <button
-          className={`tab-button ${activeTab === "Blog" ? "active" : ""}`}
-          onClick={() => setActiveTab("Blog")}
+          className={`tab-button ${activeTab === "blog" ? "active" : ""}`}
+          onClick={() => setActiveTab("blog")}
         >
           Blog
         </button>
       </div>
 
       {/* 조건부 렌더링 */}
-      {activeTab === "Account" && (
+      {activeTab === "account" && (
         <>
           <div className="list-containerAdm">
             <h2>사용자 계정 목록</h2>
@@ -78,11 +97,7 @@ const Admin = () => {
                       {el.email}
                       <button
                         className="delete-button"
-                        onClick={() => {
-                          setUserList((prev) =>
-                            prev.filter((user) => user.id !== el.id)
-                          );
-                        }}
+                        onClick={() => handleDeleteUser(el.email)}
                       >
                         삭제
                       </button>
@@ -95,7 +110,7 @@ const Admin = () => {
         </>
       )}
 
-      {activeTab === "Blog" && (
+      {activeTab === "blog" && (
         <div className="blog-container">
           <div className="search-section">
             <input

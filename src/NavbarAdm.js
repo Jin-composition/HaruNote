@@ -13,7 +13,7 @@ const NavbarAdm = () => {
 
   return (
     <header className="navbarAdm">
-      <Link to="/signin" className="navLinkAdm">
+      <Link to="/admin" className="navLinkAdm">
         <div className="logoAdm">HARU NOTE</div>
       </Link>
 

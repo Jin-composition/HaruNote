@@ -3,7 +3,9 @@ import React, { createContext, useContext, useState } from "react";
 const TabContext = createContext();
 
 export const TabProvider = ({ children }) => {
-  const [activeTab, setActiveTab] = useState("calendar");
+  const is_admin = localStorage.getItem("is_admin");
+
+  const [activeTab, setActiveTab] = useState(is_admin ? "account" : "calendar");
   return (
     <TabContext.Provider value={{ activeTab, setActiveTab }}>
       {children}
