@@ -82,7 +82,7 @@ const Signup = () => {
 
           <input
             type="text"
-            placeholder="Name"
+            placeholder="name"
             value={username}
             onChange={(e) => setName(e.target.value)}
             className="input"
@@ -97,7 +97,7 @@ const Signup = () => {
           <div className="passwordContainer">
             <input
               type="password"
-              placeholder="Password"
+              placeholder="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="passwordInput"
