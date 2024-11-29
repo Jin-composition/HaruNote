@@ -42,38 +42,44 @@ const Diary = () => {
       return;
     }
 
-    const payload = {
-      title,
-      content,
-      public: isPublic,
-      scheduled_at: date,
-    };
-
     try {
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("content", content);
+      formData.append("public", isPublic);
+      formData.append("scheduled_at", date);
+      formData.append("owner_id", Number(user_id));
+
+      if (imageFile) {
+        formData.append("files", imageFile);
+      }
+
       if (id) {
-        // 수정: 기존 일기 데이터를 업데이트
+        console.log("수정================= ");
+
         const updateResponse = await axios.put(
           `http://localhost:8000/user/pages/${id}`,
-          payload,
+          formData,
           {
             headers: {
-              "Content-Type": "application/json",
+              "Content-Type": "multipart/form-data",
               Authorization: `Bearer ${token}`,
             },
           }
         );
+
         if (updateResponse.status === 200) {
           alert("일기가 수정되었습니다.");
           navigate("/calendar");
         }
       } else {
-        // 텍스트 데이터 업로드
+        console.log("작성================= ");
         const textResponse = await axios.post(
           "http://localhost:8000/user/pages",
-          payload,
+          formData,
           {
             headers: {
-              "Content-Type": "application/json",
+              "Content-Type": "multipart/form-data",
               Authorization: `Bearer ${token}`,
             },
           }
@@ -83,24 +89,6 @@ const Diary = () => {
           alert("일기가 저장되었습니다.");
           navigate("/calendar");
         }
-      }
-      // 이미지 파일이 있는 경우 이미지 업로드
-      if (imageFile) {
-        const formData = new FormData();
-        formData.append("file", imageFile);
-
-        const imageResponse = await axios.post(
-          "http://localhost:8000/user/upload",
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-              Authorization: `Bearer ${token}`, // 필요한 경우 인증 토큰 추가
-            },
-          }
-        );
-
-        console.log("이미지가 저장되었습니다. ", imageResponse.data);
       }
     } catch (error) {
       console.error("Upload Failed:", error);
@@ -124,12 +112,20 @@ const Diary = () => {
             },
           }
         );
+
         if (response.data.length > 0) {
           const entry = response.data[0]; // 하나의 일기만 있는 경우
           setTitle(entry.title);
           setContent(entry.content);
           setIsPublic(entry.public);
-          setImage(entry.imageUrl || null); // 이미지가 있다면 이미지 URL 설정
+
+          if (response.data[0].fileurl.length === 0) {
+            setImage(null);
+          } else {
+            const imgUrl = `http://localhost:8000/${entry.fileurl}`;
+
+            setImage(imgUrl);
+          }
         }
       } catch (err) {
         alert("일기 데이터를 가져오는 데 실패했습니다.");
@@ -163,6 +159,8 @@ const Diary = () => {
       alert("일기를 삭제하는데 실패했습니다.");
     }
   };
+
+  console.log("~~~~~~~~~~ ", image, image === "");
 
   return (
     <div className="diary-container">

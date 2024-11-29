@@ -7,6 +7,8 @@ const Signup = () => {
   const [username, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [authCode, setAuthCode] = useState("");
+  const [isAuth, setIsAuth] = useState("");
   const [error, setError] = useState(null); // 에러 상태 추가
   const [loading, setLoading] = useState(false); // 로딩 상태 추가
   const [successMessage, setSuccessMessage] = useState(null); // 성공 메시지 상태
@@ -37,8 +39,10 @@ const Signup = () => {
 
       const data = await response.json();
 
-      if (response.ok) {
-        alert("회원가입 성공!"); // 성공 메시지 출력
+      if (response.status === 422) {
+        alert("이메일 형식에 맞지 않습니다. \n다시 확인해주세요.");
+      } else if (response.ok) {
+        alert("인증코드를 전송했습니다. \n이메일을 확인해주세요."); // 성공 메시지 출력
         setName("");
         setEmail("");
         setPassword("");
@@ -93,8 +97,16 @@ const Signup = () => {
               className="signinButton"
               disabled={loading} // 로딩 중에는 버튼 비활성화
             >
-              {loading ? "가입 중..." : "Sign up"}
+              {loading ? "전송 중..." : "Sign up"}
             </button>
+
+            <input
+              type="text"
+              placeholder="인증코드를 입력해주세요."
+              value={authCode}
+              onChange={(e) => setAuthCode(e.target.value)}
+              className="passwordInput"
+            />
           </div>
         </div>
       </main>

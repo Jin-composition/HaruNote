@@ -203,6 +203,8 @@ const Calendar = () => {
                           (item) => item.date === diaryURL
                         );
 
+                        console.log("entries ", entries);
+
                         return (
                           <td
                             key={colIndex}

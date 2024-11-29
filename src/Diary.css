@@ -1,7 +1,7 @@
 .diary-container {
   width: 1000px;
   height: 480px;
-  margin: 50px auto;
+  margin: 30px auto 0;
   border: 1px solid #ddd;
   border-radius: 12px;
   padding: 20px;
@@ -131,14 +131,15 @@
 }
 
 .uploaded-image {
-  max-width: 100%;
-  height: auto;
+  width: 210px;
+  height: 130px;
   border-radius: 4px;
 }
 
 .button-container {
   display: flex;
   justify-content: center;
+  margin-top: 0px;
 }
 
 .submit-button {
