@@ -50,7 +50,7 @@
 }
 
 .calendar-table td {
-  height: 97px; /* 셀 높이 */
+  height: 95px; /* 셀 높이 */
   border: 1px solid #e0e0e0;
   position: relative;
   text-align: left;
