@@ -9,8 +9,8 @@ const Calendar = () => {
   const { activeTab, setActiveTab } = useTab();
   const [currentDate, setCurrentDate] = useState(new Date());
   const [diaryEntries, setDiaryEntries] = useState([]);
-  const user_id = localStorage.getItem("user_id");
-  const token = localStorage.getItem("token");
+  const user_id = sessionStorage.getItem("user_id");
+  const token = sessionStorage.getItem("token");
 
   const handlePrevMonth = () => {
     setCurrentDate((prevDate) => {
@@ -202,8 +202,6 @@ const Calendar = () => {
                         const entries = diaryEntries.filter(
                           (item) => item.date === diaryURL
                         );
-
-                        console.log("entries ", entries);
 
                         return (
                           <td

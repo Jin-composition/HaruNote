@@ -31,6 +31,10 @@ const Diary = () => {
     }
   };
 
+  const handleImageClick = () => {
+    document.getElementById("file-input").click(); // 이미지 클릭 시 file input 클릭
+  };
+
   const handleSubmit = async () => {
     if (!title) {
       alert("제목을 입력해주세요.");
@@ -122,7 +126,7 @@ const Diary = () => {
           if (response.data[0].fileurl.length === 0) {
             setImage(null);
           } else {
-            const imgUrl = `http://localhost:8000/${entry.fileurl}`;
+            const imgUrl = `http://localhost:8000/${entry.fileurl[0]}`;
 
             setImage(imgUrl);
           }
@@ -160,8 +164,6 @@ const Diary = () => {
     }
   };
 
-  console.log("~~~~~~~~~~ ", image, image === "");
-
   return (
     <div className="diary-container">
       <div className="title-section">
@@ -185,7 +187,23 @@ const Diary = () => {
       <div className="content-section">
         <div className="image-upload">
           {image ? (
-            <img src={image} alt="Uploaded" className="uploaded-image" />
+            <div>
+              <img
+                src={image}
+                alt="Uploaded"
+                className="uploaded-image"
+                onClick={handleImageClick} // 이미지 클릭 시 수정할 수 있게 함
+              />
+              <label className="image-edit">
+                <input
+                  id="file-input"
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                  style={{ display: "none" }} // 파일 input 숨기기
+                />
+              </label>
+            </div>
           ) : (
             <label className="image-placeholder">
               <input
