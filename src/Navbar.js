@@ -4,10 +4,10 @@ import "./Navbar.css";
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const user_id = localStorage.getItem("user_id");
+  const user_id = sessionStorage.getItem("user_id");
 
   const handleLogout = () => {
-    localStorage.clear();
+    sessionStorage.clear();
     navigate("/signin");
   };
 

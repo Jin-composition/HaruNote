@@ -5,7 +5,7 @@ import axios from "axios";
 import "./Admin.css";
 
 const Admin = () => {
-  const token = localStorage.getItem("token");
+  const token = sessionStorage.getItem("token");
 
   const { activeTab, setActiveTab } = useTab();
   const [title, setTitle] = useState("");

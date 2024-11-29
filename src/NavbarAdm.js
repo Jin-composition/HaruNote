@@ -6,7 +6,7 @@ const NavbarAdm = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    localStorage.clear();
+    sessionStorage.clear();
     navigate("/signin");
     window.location.reload();
   };

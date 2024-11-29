@@ -4,7 +4,7 @@ import axios from "axios";
 import "./Blog.css";
 
 const Blog = () => {
-  const token = localStorage.getItem("token");
+  const token = sessionStorage.getItem("token");
   const [title, setTitle] = useState("");
 
   const [diaryEntries, setDiaryEntries] = useState([]);

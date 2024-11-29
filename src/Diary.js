@@ -7,9 +7,9 @@ const Diary = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { date } = useParams();
-  const token = localStorage.getItem("token");
-  const user_id = localStorage.getItem("user_id");
-  const is_admin = localStorage.getItem("is_admin");
+  const token = sessionStorage.getItem("token");
+  const user_id = sessionStorage.getItem("user_id");
+  const is_admin = sessionStorage.getItem("is_admin");
 
   const { entryTitle, id, entryOwner } = location.state || {};
 

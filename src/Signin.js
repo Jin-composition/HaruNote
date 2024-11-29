@@ -30,9 +30,9 @@ const Signin = () => {
         password,
       });
 
-      localStorage.setItem("token", response.data.access_token);
-      localStorage.setItem("user_id", response.data.user_id);
-      localStorage.setItem("is_admin", response.data.is_admin);
+      sessionStorage.setItem("token", response.data.access_token);
+      sessionStorage.setItem("user_id", response.data.user_id);
+      sessionStorage.setItem("is_admin", response.data.is_admin);
 
       if (response.data.is_admin === true) {
         navigate("/admin");

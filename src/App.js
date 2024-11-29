@@ -11,7 +11,7 @@ import NavbarAdm from "./NavbarAdm";
 import Admin from "./Admin";
 
 const App = () => {
-  const is_admin = Boolean(localStorage.getItem("is_admin"));
+  const is_admin = Boolean(sessionStorage.getItem("is_admin"));
 
   return (
     <>
