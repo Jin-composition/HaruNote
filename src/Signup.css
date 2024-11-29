@@ -40,17 +40,37 @@
   position: absolute;
   right: -26px;
   top: 41%;
-  transform: translateY(-105%);
-  padding: 15px 30px;
+  transform: translateY(-106%);
   background-color: black;
   color: white;
   border: 1px solid black;
   border-radius: 30px;
   font-size: 16px;
   cursor: pointer;
+  width: 115px;
+  height: 50px;
 }
 
 .signinButton:hover {
+  background-color: #444;
+}
+
+.authButton {
+  position: absolute;
+  right: -26px;
+  top: 41%;
+  transform: translateY(30%);
+  background-color: black;
+  color: white;
+  border: 1px solid black;
+  border-radius: 30px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 115px;
+  height: 50px;
+}
+
+.authButton:hover {
   background-color: #444;
 }
 
