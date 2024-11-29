@@ -5,6 +5,7 @@ import "./Navbar.css";
 const Navbar = () => {
   const navigate = useNavigate();
   const user_id = sessionStorage.getItem("user_id");
+  const email = sessionStorage.getItem("email");
 
   const handleLogout = () => {
     sessionStorage.clear();
@@ -52,25 +53,26 @@ const Navbar = () => {
               Blog
             </Link>
           </li>
-          <li className="navLinkWrapper">
-            <Link to="/signup" className="navLink">
-              Sign up
-            </Link>
-          </li>
           <li className="navItem2">
             {user_id ? (
-              <button
+              <Link
+                to="/signin"
                 style={{ cursor: "pointer" }}
                 className="navLinkSignin"
                 onClick={handleLogout}
               >
                 Logout
-              </button>
+              </Link>
             ) : (
               <Link to="/signin" className="navLinkSignin">
                 Sign in
               </Link>
             )}
+          </li>
+          <li className="navLinkWrapper">
+            <Link to="/signup" className="navLink2">
+              {user_id ? `${email.split("@")[0]}` : "Sign up"}
+            </Link>
           </li>
         </ul>
       </nav>

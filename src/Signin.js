@@ -25,7 +25,7 @@ const Signin = () => {
     }
 
     try {
-      const response = await axios.post("http://localhost:8000/user/Signin", {
+      const response = await axios.post("http://localhost:8000/user/signin", {
         email,
         password,
       });
@@ -34,6 +34,7 @@ const Signin = () => {
       sessionStorage.setItem("refresh_token", response.data.refresh_token);
       sessionStorage.setItem("user_id", response.data.user_id);
       sessionStorage.setItem("is_admin", response.data.is_admin);
+      sessionStorage.setItem("email", response.data.email);
 
       if (response.data.is_admin === true) {
         navigate("/admin");

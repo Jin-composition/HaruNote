@@ -34,7 +34,7 @@
 .navLine {
   position: absolute;
   top: 54%;
-  left: -22%;
+  left: -22.6%;
   width: 68%;
   height: 1px;
   background-color: #000000;
@@ -43,26 +43,29 @@
 
 .navItem {
   list-style: none;
-  margin: 0 50px;
+  margin: 0 20px;
+  width: 50px;
 }
 
 .navItem2 {
   list-style: none;
-  margin-left: 50px;
   margin-right: 10px;
 }
 
 .navLinkWrapper {
   display: inline-block;
-  background-color: #fff;
+  background-color: black;
   color: #333;
   padding: 3px 10px;
   border-radius: 25px;
   text-decoration: none;
   text-align: center;
-  border: 1px solid #000;
-  width: 80px;
-  margin-left: 10px;
+  width: 90px;
+  margin-left: 30px;
+  margin-right: 30px;
+  height: 30px;
+  font-size: 15px;
+  line-height: 30px; /* 텍스트가 세로 중앙에 오도록 설정 */
 }
 
 .navLink {
@@ -71,14 +74,23 @@
   font-size: 18px;
 }
 
-.navLinkSignin {
-  display: inline-block;
-  background-color: black;
+.navLink2 {
   color: white;
-  padding: 6px 30px;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.navLinkSignin {
+  display: inline-flex; /* flexbox를 사용하여 중앙 정렬 */
+  background-color: white;
+  color: black;
+  border: 1px solid black;
+  padding: 5px 30px;
   border-radius: 25px;
   text-decoration: none;
-  text-align: center;
   font-weight: normal;
-  font-size: 18px;
+  font-size: 17px;
+  height: 20px; /* 고정된 높이 설정 */
+  align-items: center; /* 세로 중앙 정렬 */
+  justify-content: center; /* 가로 중앙 정렬 */
 }
